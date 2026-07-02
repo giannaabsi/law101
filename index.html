@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Law 101, by Gianna Absi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EAE2CF;
+    --bg-card: #F6F1E3;
+    --bg-card-hover: #F0E9D6;
+    --ink: #241D14;
+    --ink-soft: #4B3F2E;
+    --brown-deep: #4A3626;
+    --brown-mid: #7C5C3B;
+    --brown-line: #CBB994;
+    --brown-line-soft: #DDD0AE;
+    --accent: #8C5A2B;
+    --accent-soft: #B9863F;
+    --sidebar-bg: #241D14;
+    --sidebar-ink: #E8DFC8;
+    --sidebar-ink-dim: #9C8F72;
+    --sidebar-line: #3B3020;
+    --max-w: 760px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Source Sans 3', sans-serif;
+    font-size:17px;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    color:var(--brown-deep);
+    margin:0;
+  }
+  .mono{
+    font-family:'Space Mono', monospace;
+    letter-spacing:0.04em;
+  }
+  a{ color:inherit; }
+  ::selection{ background:var(--accent-soft); color:#fff; }
+
+  /* Layout shell */
+  #shell{ display:flex; min-height:100vh; }
+  #sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar-bg);
+    color:var(--sidebar-ink);
+    padding:34px 26px 26px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  #sidebar .brand{ display:block; cursor:pointer; margin-bottom:6px; }
+  #sidebar .brand .num{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    color:var(--accent-soft);
+    letter-spacing:0.18em;
+  }
+  #sidebar .brand h1{
+    color:#F3EBD6;
+    font-size:26px;
+    font-weight:600;
+    margin-top:2px;
+  }
+  #sidebar .tagline{
+    font-size:13px;
+    color:var(--sidebar-ink-dim);
+    margin-top:8px;
+    line-height:1.5;
+  }
+  #sidebar .byline{
+    font-size:12px;
+    color:var(--accent-soft);
+    margin-top:10px;
+    padding-bottom:22px;
+    border-bottom:1px solid var(--sidebar-line);
+    font-style:italic;
+  }
+  .nav-group{ margin-top:22px; }
+  .nav-label{
+    font-family:'Space Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--sidebar-ink-dim);
+    margin-bottom:10px;
+  }
+  .nav-item{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:9px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:14.5px;
+    color:var(--sidebar-ink);
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .nav-item:hover{ background:rgba(255,255,255,0.06); }
+  .nav-item.active{ background:rgba(184,134,63,0.22); color:#F3EBD6; }
+  .nav-item .code{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:var(--accent-soft);
+    min-width:56px;
+    flex-shrink:0;
+  }
+  .nav-item.active .code{ color:#E3B876; }
+
+  #main{ flex:1; min-width:0; padding:56px 48px 100px; }
+  .page{ max-width:var(--max-w); margin:0 auto; }
+
+  #menu-toggle{
+    display:none;
+    position:fixed;
+    top:16px; left:16px;
+    z-index:50;
+    background:var(--sidebar-bg);
+    color:var(--sidebar-ink);
+    border:none;
+    border-radius:6px;
+    width:42px; height:42px;
+    font-size:18px;
+    cursor:pointer;
+  }
+
+  /* Home page */
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:16px;
+  }
+  .hero h1{ font-size:50px; font-weight:700; line-height:1.08; }
+  .hero .tagline-big{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:21px;
+    color:var(--brown-mid);
+    margin-top:14px;
+  }
+  .home-copy{ margin-top:30px; max-width:640px; }
+  .home-copy p{ font-size:17px; color:var(--ink-soft); margin:0 0 20px; }
+  .home-copy h3{
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent);
+    margin:36px 0 12px;
+    font-family:'Space Mono', monospace;
+    font-weight:400;
+  }
+  .home-copy ul{ margin:0 0 20px; padding-left:20px; color:var(--ink-soft); }
+  .home-copy li{ margin-bottom:8px; }
+  .home-copy .inline-link{
+    color:var(--accent);
+    text-decoration:underline;
+    text-decoration-color:var(--accent-soft);
+    cursor:pointer;
+  }
+
+  .origin-line{
+    margin-top:34px;
+    padding:20px 22px;
+    background:var(--bg-card);
+    border-left:3px solid var(--accent-soft);
+    border-radius:2px;
+    max-width:640px;
+  }
+  .origin-line .label{
+    font-family:'Space Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:block;
+    margin-bottom:8px;
+  }
+  .origin-line p{ font-size:15px; color:var(--ink-soft); margin:0 0 10px; }
+  .origin-line .signed{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--brown-deep);
+    margin-top:8px;
+  }
+
+  .site-footer{
+    margin-top:70px;
+    padding-top:20px;
+    border-top:1px solid var(--brown-line);
+    font-size:13px;
+    color:var(--brown-mid);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* Detail page (practice area) */
+  .back-link{
+    font-size:13.5px;
+    color:var(--brown-mid);
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:28px;
+  }
+  .back-link:hover{ color:var(--accent); }
+
+  .detail-code{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  .detail-title{ font-size:38px; font-weight:700; }
+  .detail-sub{
+    font-size:16.5px;
+    color:var(--brown-mid);
+    font-style:italic;
+    font-family:'Fraunces', serif;
+    margin-top:8px;
+  }
+
+  .section-block{ margin-top:42px; }
+  .section-block .block-label{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  .section-block h2{ font-size:21px; margin-bottom:14px; }
+  .section-block p{ color:var(--ink-soft); font-size:16px; }
+
+  .term-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:6px; }
+  .term-card{
+    background:var(--bg-card);
+    border:1px solid var(--brown-line-soft);
+    border-radius:6px;
+    padding:16px 18px;
+  }
+  .term-card .term-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--brown-deep);
+  }
+  .term-card .term-def{ font-size:14px; color:var(--ink-soft); margin-top:6px; line-height:1.5; }
+
+  .example-box{
+    background:var(--brown-deep);
+    color:#F0E7D0;
+    border-radius:8px;
+    padding:24px 26px;
+    margin-top:12px;
+    position:relative;
+  }
+  .example-box .example-mark{
+    font-family:'Fraunces', serif;
+    font-size:34px;
+    color:#8C6B3F;
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .example-box p{ color:#EADFC2; font-size:15.5px; margin:0; }
+
+  .why-box{
+    background:var(--bg-card);
+    border:1px solid var(--brown-line-soft);
+    border-radius:6px;
+    padding:18px 20px;
+  }
+  .why-box p{ margin:0; font-style:italic; color:var(--brown-deep); font-family:'Fraunces', serif; font-size:16px; line-height:1.6; }
+
+  .who-line{
+    background:var(--bg-card);
+    border-radius:6px;
+    padding:16px 18px;
+    border:1px solid var(--brown-line-soft);
+  }
+  .who-line p{ margin:0; }
+
+  .nav-footer{
+    margin-top:60px;
+    padding-top:22px;
+    border-top:1px solid var(--brown-line);
+    display:flex;
+    justify-content:space-between;
+    font-size:13.5px;
+    color:var(--brown-mid);
+  }
+  .nav-footer div{ cursor:pointer; }
+  .nav-footer div:hover{ color:var(--accent); }
+
+  /* Comparison layout (Civil and Common Law) */
+  .compare-block{ margin-top:16px; }
+  .compare-title{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    color:var(--brown-deep);
+    margin-bottom:12px;
+    font-weight:600;
+  }
+  .compare-table{
+    display:grid;
+    grid-template-columns:150px 1fr 1fr;
+    border:1px solid var(--brown-line-soft);
+    border-radius:8px;
+    overflow:hidden;
+    background:var(--bg-card);
+  }
+  .compare-table .ch{
+    padding:12px 14px;
+    font-family:'Space Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    background:var(--brown-deep);
+    color:#E8DFC8;
+  }
+  .compare-table .ch.corner{ background:var(--brown-deep); color:#8C6B3F; }
+  .compare-table .row-label{
+    padding:14px;
+    font-size:13px;
+    color:var(--brown-mid);
+    font-weight:600;
+    background:var(--bg-card-hover);
+    border-top:1px solid var(--brown-line-soft);
+    display:flex;
+    align-items:center;
+  }
+  .compare-table .cell{
+    padding:14px;
+    font-size:14.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--brown-line-soft);
+    border-left:1px solid var(--brown-line-soft);
+  }
+
+  .orient-topic{ margin-top:36px; padding-bottom:32px; border-bottom:1px solid var(--brown-line-soft); }
+  .orient-topic:last-child{ border-bottom:none; }
+  .orient-topic .otitle{ font-size:20px; margin-bottom:10px; }
+  .orient-topic p{ color:var(--ink-soft); font-size:15.5px; }
+  .flow-row{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:14px; }
+  .flow-row .fstep{
+    background:var(--bg-card);
+    border:1px solid var(--brown-line-soft);
+    border-radius:4px;
+    padding:8px 12px;
+    font-size:13px;
+    color:var(--brown-deep);
+  }
+  .flow-row .fsep{ color:var(--brown-mid); font-size:14px; }
+
+  @media (max-width: 860px){
+    #sidebar{
+      position:fixed; left:0; top:0;
+      transform:translateX(-100%);
+      transition:transform 0.2s ease;
+      z-index:40;
+      width:260px;
+    }
+    #sidebar.open{ transform:translateX(0); }
+    #menu-toggle{ display:block; }
+    #main{ padding:80px 20px 80px; }
+    .hero h1{ font-size:32px; }
+    .term-grid{ grid-template-columns:1fr; }
+    .detail-title{ font-size:28px; }
+    .compare-table{ grid-template-columns:110px 1fr 1fr; font-size:12px; }
+  }
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+
+<div id="shell">
+  <nav id="sidebar">
+    <div class="brand" data-nav="home">
+      <span class="num mono">101</span>
+      <h1>Law 101</h1>
+    </div>
+    <div class="tagline">Law, one term at a time.</div>
+    <div class="byline">by Gianna Absi</div>
+
+    <div class="nav-group">
+      <div class="nav-label">Start</div>
+      <div class="nav-item" data-nav="home"><span class="code">&mdash;</span>Home</div>
+      <div class="nav-item" data-nav="orientation"><span class="code">ORNT</span>How Law Works</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Practice Areas</div>
+      <div id="sidebar-sections"></div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <div class="page" id="page"></div>
+  </main>
+</div>
+
+<script>
+/* ================= CONTENT DATA ================= */
+
+const SECTIONS = [
+  {
+    id: "civil-common",
+    code: "CIVIL 101",
+    title: "Civil & Common Law",
+    short: "Two ideas in one: how private disputes work, and the system that decides them.",
+    isComparison: true,
+    what: "This section actually bundles two different ideas together, and it helps to keep them separate from the start. The first is civil law as a case type: a dispute between private parties, resolved with money or a court order rather than jail time. The second is common law as a legal system: law built mainly from judicial decisions and precedent, the system used across the United States, the United Kingdom, and most English speaking countries. Both ideas show up constantly once you start reading about law, so this page breaks each one down side by side against its natural counterpart.",
+    who: "A plaintiff and a defendant, not a state and an accused. Civil litigators represent each side, and no prosecutor is involved anywhere in the process.",
+    why: "Nearly every other legal concept on this site assumes you already understand these two distinctions, so this page is worth reading before any of the others.",
+    comparisons: [
+      {
+        title: "Common Law System vs. Civil Law System",
+        rows: [
+          ["Where it is used", "The U.S., U.K., Canada, and most English speaking countries", "Much of continental Europe, Latin America, and parts of Asia"],
+          ["Main source of law", "Judicial decisions and precedent", "Comprehensive written codes"],
+          ["Role of judges", "Interpret and build on past rulings", "Apply the written code to the facts"],
+          ["How it changes", "Evolves case by case, over time", "Changes mainly through new legislation"]
+        ]
+      }
+    ],
+    terms: [
+      ["Plaintiff","The person or entity who files a civil lawsuit."],
+      ["Defendant","The person or entity being sued."],
+      ["Complaint","The document that starts a lawsuit, laying out the plaintiff's claims."],
+      ["Damages","Money awarded to compensate the plaintiff for harm suffered."],
+      ["Discovery","The pretrial phase where both sides exchange evidence and information."],
+      ["Deposition","Sworn out of court testimony taken during discovery, for possible use at trial."],
+      ["Settlement","An agreement to resolve a case without trial, often involving payment."],
+      ["Tort","A civil wrong causing harm, such as negligence or defamation, that the injured party can sue over."],
+      ["Injunction","A court order requiring someone to do, or stop doing, something."],
+      ["Precedent","A past court decision that guides how similar future cases are decided."],
+      ["Stare decisis","Latin for \u201cto stand by things decided,\u201d the principle that courts follow precedent."]
+    ],
+    example: "If someone slips on an unmarked wet floor in a store and gets hurt, suing the store for damages is a civil case, resolved directly between the injured person and the store. The rules that shape how that case unfolds, what counts as evidence, and how a judge weighs a similar case from ten years ago, come from the common law system used across the U.S.: built case by case, rather than from one master rulebook."
+  },
+  {
+    id: "criminal",
+    code: "CRIM 101",
+    title: "Criminal Law",
+    short: "Conduct the state treats as harmful to society, and how the government prosecutes it.",
+    what: "Criminal law addresses conduct the state considers harmful to society as a whole, not just to one victim. It's the government, referred to as the state or the People, that brings the case, not the victim directly, and the outcome is punishment: fines, probation, or imprisonment, rather than compensation. Because the government has so much power in this process, criminal defendants are given specific constitutional protections that don't apply in civil cases, such as the right to an attorney and the right against self incrimination.",
+    who: "Prosecutors represent the government and decide what charges to bring. Defense attorneys, whether private or public defenders, represent the accused. Judges oversee the process and, if there is no jury, decide the outcome themselves.",
+    why: "Understanding this distinction, government versus individual, punishment versus compensation, explains why criminal and civil cases can arise from the exact same incident but proceed in completely different ways.",
+    terms: [
+      ["Felony","A serious crime generally punishable by more than a year in prison, such as robbery or murder."],
+      ["Misdemeanor","A less serious crime, typically punishable by under a year in jail or a fine."],
+      ["Arraignment","The hearing where a defendant is formally told the charges against them and enters a plea."],
+      ["Plea bargain","An agreement to plead guilty to a lesser charge in exchange for a lighter sentence, avoiding trial."],
+      ["Probable cause","The reasonable, fact based belief that a crime occurred, the standard needed for an arrest or warrant."],
+      ["Beyond a reasonable doubt","The high standard of proof prosecutors must meet, jurors must have no reasonable doubt about guilt."],
+      ["Miranda rights","Warnings police must give a suspect in custody before questioning, including the right to remain silent."],
+      ["Bail","Money or a promise a defendant provides to be released before trial, guaranteeing their return to court."],
+      ["Indictment","A formal charge, usually from a grand jury, stating there is enough evidence to try someone for a serious crime."],
+      ["Acquittal","A not guilty verdict that legally clears the defendant of the charge."],
+      ["Double jeopardy","The constitutional protection against being tried twice for the same crime."],
+      ["Mens rea","Latin for \u201cguilty mind,\u201d the intent a prosecutor must prove for most crimes."]
+    ],
+    example: "Someone shoplifts from a store and is arrested. The state, not the store, brings the charges against them. If convicted, the penalty is decided by a judge and can range from probation to jail time; the store itself never receives a payment through this process, since that would be a separate civil matter."
+  },
+  {
+    id: "corporate",
+    code: "CORP 101",
+    title: "Corporate Law",
+    short: "How businesses are formed, financed, governed, and eventually bought or sold.",
+    what: "Corporate law governs how businesses are formed, structured, financed, and governed, all the way through to being sold or dissolved. It covers choosing a business entity, running a board, raising money, and negotiating deals. Much of this work happens at a negotiating table or in a document, not a courtroom, which is why it is often described as deal work rather than litigation.",
+    who: "Corporate or transactional attorneys, in-house counsel, and mergers and acquisitions teams, negotiating and drafting rather than arguing cases in front of a judge.",
+    why: "The entity a business chooses at formation affects nearly everything downstream: how it raises money, how it is taxed, and how much personal financial risk its owners actually carry.",
+    terms: [
+      ["Entity formation","The legal process of creating a business, as an LLC, corporation, or partnership, each with different tax and liability effects."],
+      ["LLC","A business structure that shields owners' personal assets from business debts, with flexible tax treatment."],
+      ["Corporation","A legal entity separate from its owners, offering liability protection but requiring more formal governance."],
+      ["Shareholder","A person or entity that owns shares, meaning partial ownership, of a corporation."],
+      ["Board of directors","The group elected by shareholders to oversee a corporation's major decisions."],
+      ["Fiduciary duty","The legal obligation of directors and officers to act in the company's best interest, not their own."],
+      ["Due diligence","The investigation a buyer runs into a company's finances, contracts, and liabilities before a deal closes."],
+      ["Mergers and acquisitions","Combining companies through a merger, or one company buying another outright."],
+      ["Term sheet","A non-binding outline of a proposed deal's key terms, ahead of formal contracts."],
+      ["Securities","Financial instruments like stocks and bonds, whose sale is heavily regulated."],
+      ["IPO","Initial Public Offering, the first sale of a private company's shares to the public."],
+      ["Bylaws","The internal rules that govern how a corporation operates."]
+    ],
+    example: "A startup wants outside investors. Before any money changes hands, an attorney helps the founders choose the right business structure, draft the company's bylaws, and negotiate a term sheet that lays out exactly what the investor gets in exchange for their funding."
+  },
+  {
+    id: "employment",
+    code: "EMPL 101",
+    title: "Employment Law",
+    short: "The rules governing hiring, pay, safety, and the end of the working relationship.",
+    what: "Employment law governs the relationship between employers and employees: hiring, pay, workplace safety, discrimination, and termination. Much of it exists to balance a relationship that is naturally unequal, since an employer generally holds far more power than any single employee.",
+    who: "Employment attorneys represent either employees, in disputes over wrongful termination or discrimination, or employers, in compliance work and defending against claims.",
+    why: "Because most U.S. employment is at will, meaning either side can end it at almost any time, the exceptions to that rule, like discrimination and retaliation, are where nearly all real legal disputes actually live.",
+    terms: [
+      ["At-will employment","The default rule in most U.S. states that either side can end the job at any time, with key exceptions."],
+      ["Wrongful termination","Firing someone for an illegal reason, such as discrimination or retaliation."],
+      ["Discrimination","Treating an employee unfairly based on a protected characteristic like race, gender, or age."],
+      ["Harassment","Unwelcome conduct based on a protected characteristic that creates a hostile work environment."],
+      ["Retaliation","Punishing an employee for a legally protected action, like reporting discrimination."],
+      ["Non-compete agreement","A contract restricting an employee from working for a competitor for a set time after leaving."],
+      ["NDA","A contract preventing an employee from sharing confidential company information."],
+      ["Exempt vs. non-exempt","Whether an employee is entitled to overtime pay, based on duties and salary."],
+      ["FMLA","A federal law giving eligible employees unpaid, job protected leave for family or medical reasons."],
+      ["Severance","Pay or benefits offered when employment ends, often in exchange for releasing legal claims."],
+      ["EEOC","The federal agency that enforces workplace discrimination laws and investigates complaints."],
+      ["Independent contractor","A worker providing services without formal employee status, a common source of legal disputes."]
+    ],
+    example: "An employee is fired shortly after reporting harassment to HR. Because punishing someone for reporting harassment is illegal, they may have a wrongful termination claim, something an at-will employee normally would not have simply for being let go without any stated reason."
+  },
+  {
+    id: "contract",
+    code: "CONTR 101",
+    title: "Contract Law",
+    short: "What makes an agreement legally binding, and what happens when one breaks down.",
+    what: "Contract law governs legally binding agreements: what makes a contract valid, how it is interpreted, and what remedies exist when someone breaks one. Almost every business relationship, and plenty of personal ones, run through some form of contract, even when nobody calls it that out loud.",
+    who: "Nearly every attorney touches contracts in some way. Transactional attorneys draft and negotiate them, and litigators step in once they break down.",
+    why: "A contract is likely the single most common legal document most people will ever sign, yet the clauses that matter most, like what counts as breach and how disputes get resolved, are usually the ones read least carefully.",
+    terms: [
+      ["Offer","A clear proposal to enter an agreement on specific terms."],
+      ["Acceptance","Agreeing to the exact terms of an offer, which forms a contract."],
+      ["Consideration","Something of value exchanged between parties, required for a contract to be enforceable."],
+      ["Breach of contract","Failing to fulfill a contract's terms without a legal excuse."],
+      ["Damages","Money meant to put the non-breaching party where they would have been if the contract was honored."],
+      ["Specific performance","A court order requiring the actual promised act, used when money alone is not a sufficient remedy."],
+      ["Void vs. voidable","A void contract was never valid; a voidable one is valid but cancellable by one party."],
+      ["Indemnification clause","A provision where one party agrees to cover the other's losses from certain issues."],
+      ["Force majeure","A clause excusing performance due to extraordinary events beyond a party's control."],
+      ["Statute of frauds","The rule requiring certain contracts, like real estate sales, to be in writing."],
+      ["Liquidated damages","A pre-agreed compensation amount if the contract is breached."],
+      ["Boilerplate","Standard, reused contract language covering routine matters."]
+    ],
+    example: "A freelance designer and a client sign an agreement for a website by a set deadline and fee. If the client stops paying partway through, the designer's ability to recover payment depends heavily on what the contract's breach and payment terms actually say, which is why those clauses matter far more than they seem to at signing."
+  },
+  {
+    id: "family",
+    code: "FAM 101",
+    title: "Family Law",
+    short: "Marriage, divorce, custody, and the legal matters that come with them.",
+    what: "Family law covers legal matters involving family relationships: marriage, divorce, child custody, adoption, and related finances. Unlike most other areas on this site, the people involved are rarely companies, and the stakes are often deeply personal rather than financial.",
+    who: "Family law attorneys, usually working directly with individuals rather than businesses. Many cases involve mediation alongside, or instead of, a courtroom.",
+    why: "Family law cases are unusually personal: the same legal tools used to resolve a business dispute, like mediation and settlement, are applied here to relationships and children instead of contracts and money.",
+    terms: [
+      ["Divorce","The legal ending of a marriage."],
+      ["Custody","Legal custody covers decision making for a child; physical custody covers where they actually live."],
+      ["Child support","Court ordered payments from one parent to another to help cover a child's expenses."],
+      ["Alimony","Court ordered payments from one former spouse to the other, addressing income disparity."],
+      ["Prenuptial agreement","A pre-marriage contract setting out how assets and finances are handled if the marriage ends."],
+      ["Community property vs. equitable distribution","Two approaches states use to divide marital property, an equal split versus a fair but not necessarily equal one."],
+      ["Mediation","A neutral third party helping a couple negotiate terms outside of court."],
+      ["Guardian ad litem","A person appointed to represent a child's best interests in a family case."],
+      ["Adoption","The legal process of establishing a parent-child relationship between people not biologically related."],
+      ["Restraining order","A court order limiting or prohibiting contact between people."],
+      ["Best interests of the child","The legal standard courts use to decide custody and related matters."]
+    ],
+    example: "A married couple with one child decides to divorce. Beyond ending the marriage itself, they need to resolve custody, child support, and how to divide shared property, ideally through mediation before ever involving a judge in the decision."
+  },
+  {
+    id: "ip",
+    code: "IP 101",
+    title: "Intellectual Property",
+    short: "Legal protection for inventions, brands, and creative work.",
+    what: "Intellectual property law protects creations of the mind: inventions, brands, and creative works, giving creators exclusive rights to use and profit from them. As more value in the economy shifts toward ideas rather than physical goods, this area has become increasingly central to how businesses actually compete.",
+    who: "IP attorneys, often specialized further into patent, trademark, or copyright work. Patent attorneys typically need a technical or scientific background in addition to their legal training.",
+    why: "As more value shifts toward ideas rather than physical products, protecting inventions, brands, and creative work has become central to how most modern businesses compete with each other.",
+    terms: [
+      ["Patent","Exclusive rights to a new invention, usually lasting 20 years."],
+      ["Trademark","Protection for brand identifiers, names, logos, slogans, that distinguish a business."],
+      ["Copyright","Automatic protection for original creative works, from writing to software."],
+      ["Trade secret","Confidential business information protected by staying secret rather than registered."],
+      ["Infringement","Using someone else's protected IP without permission."],
+      ["Fair use","A doctrine allowing limited, unlicensed use of copyrighted material for things like commentary or education."],
+      ["Licensing","Granting permission to use your IP, usually in exchange for royalty payments."],
+      ["Prior art","Existing knowledge that can block a new patent if the invention is not truly novel."],
+      ["Public domain","Creative works no longer protected by copyright, free for anyone to use."],
+      ["USPTO","The federal agency that reviews and grants U.S. patents and trademarks."],
+      ["Cease and desist letter","A formal demand to stop an infringing activity, often sent before a lawsuit."],
+      ["Royalty","A payment to an IP owner for continued use of their work or invention."]
+    ],
+    example: "An inventor creates a new device and wants to stop competitors from copying it. Filing for a patent gives them the exclusive legal right to make and sell that invention, along with the ability to take legal action against anyone who infringes on it later."
+  },
+  {
+    id: "constitutional",
+    code: "CONST 101",
+    title: "Constitutional Law",
+    short: "The structure of government, and the rights it cannot infringe on.",
+    what: "Constitutional law governs the structure of government and the rights it grants, or is barred from infringing on, rooted in the U.S. Constitution. Relatively few attorneys practice it full time, but it quietly underlies how courts interpret nearly every other area of law on this site.",
+    who: "Government lawyers, civil rights organizations, and appellate specialists most often, plus every court, indirectly, whenever it interprets a statute against constitutional limits.",
+    why: "Even outside a courtroom, constitutional law sets the outer boundary that every other law has to operate within, which is why it quietly shapes cases in every other section of this site.",
+    terms: [
+      ["Judicial review","The power of courts to strike down laws that violate the Constitution."],
+      ["Due process","The guarantee that government must follow fair procedures before depriving someone of life, liberty, or property."],
+      ["Equal protection","The guarantee that government must treat similarly situated people equally."],
+      ["Federalism","The division of power between federal and state governments."],
+      ["Separation of powers","The division of government into legislative, executive, and judicial branches."],
+      ["First Amendment","Protects speech, religion, press, assembly, and petition."],
+      ["Fourth Amendment","Protects against unreasonable searches and seizures."],
+      ["Standing","The requirement that a plaintiff have a real, direct stake in a case in order to sue."],
+      ["Strict scrutiny","The toughest level of judicial review, applied to laws affecting fundamental rights."],
+      ["Supremacy Clause","Establishes that federal law generally overrides conflicting state law."],
+      ["Amendment","A formal change or addition to the Constitution."],
+      ["Landmark case","A decision that significantly shapes future interpretation of the law."]
+    ],
+    example: "A state passes a law that a group believes restricts free speech. Before they can challenge it in court, they have to show they are directly affected by the law, then the case works its way up through the court system, occasionally reaching the Supreme Court."
+  }
+];
+
+const ORIENTATION_TOPICS = [
+  {
+    title: "How a lawsuit actually moves through court",
+    text: "Most civil cases follow a similar arc, whether it is a contract dispute or a personal injury claim, and it usually starts long before anyone sets foot in a courtroom.",
+    flow: ["Dispute arises","Demand letter","Complaint filed","Response","Discovery","Pretrial motions","Settlement or trial","Judgment","Possible appeal"]
+  },
+  {
+    title: "What precedent means, and why it matters",
+    text: "In a common law system, courts generally follow stare decisis: they stick to how similar cases were decided before. A trial court is bound by decisions from the appellate courts above it. That is why lawyers spend so much time researching past cases; the outcome of a new case is shaped as much by precedent as by the specific facts in front of the judge."
+  },
+  {
+    title: "State law vs. federal law",
+    text: "Federal law comes from Congress, federal agencies, and the U.S. Constitution, and applies nationwide. State law varies significantly by state; most contract law, family law, and criminal law is actually state law. When the two conflict, the Constitution's Supremacy Clause generally means federal law wins, but plenty of areas, like most of family law, are left almost entirely to the states."
+  },
+  {
+    title: "Law school and the bar, briefly",
+    text: "Practicing law in the U.S. generally requires a Juris Doctor, three years of law school after a bachelor's degree, followed by passing a state bar exam. The first year, often called 1L, is famously standardized across nearly every U.S. law school: Contracts, Torts, Civil Procedure, Criminal Law, Constitutional Law, and Property. Passing the bar in a given state is what actually licenses someone to practice there; law school alone does not."
+  },
+  {
+    title: "How courts are structured",
+    text: "Most systems run on three tiers: trial courts, where cases start and facts are decided, appellate courts, which review trial court decisions for legal errors rather than re-arguing the facts, and a supreme court, the final word, which hears only a small fraction of cases. The U.S. runs parallel systems, federal courts and each state's own courts, each built on this same three tier structure."
+  }
+];
+
+/* ================= RENDERING ================= */
+
+const sidebarSections = document.getElementById('sidebar-sections');
+SECTIONS.forEach(s => {
+  const el = document.createElement('div');
+  el.className = 'nav-item';
+  el.dataset.nav = 'section-' + s.id;
+  el.innerHTML = `<span class="code">${s.code.split(' ')[0]}</span>${s.title}`;
+  sidebarSections.appendChild(el);
+});
+
+function renderHome(){
+  return `
+    <div class="hero">
+      <div class="eyebrow">Law 101</div>
+      <h1>A field guide for<br>the legally curious.</h1>
+      <div class="tagline-big">Law, one term at a time.</div>
+    </div>
+
+    <div class="home-copy">
+      <p>Law 101 is a plain-English breakdown of the legal system, built for anyone stepping into it for the first time: pre-law students, new interns, or anyone who has ever sat through a legal conversation nodding along without fully following it. It is not a substitute for legal advice, and it will not make anyone a lawyer. What it will do is make the vocabulary, the systems, and the reasoning behind the law a little less intimidating.</p>
+
+      <p>Each practice area in the sidebar to the left is broken down the same way: what it actually covers, who spends their career working in it, the vocabulary you need to keep up in conversation, why it matters in the bigger picture, and one simple, real-world example of how it plays out.</p>
+
+      <h3>Where to start</h3>
+      <p>Civil and Common Law sits first because it is less a single topic and more the foundation the rest of the site builds on: the difference between a civil case and a criminal one, and the difference between a common law system and a civil law system. From there, Criminal, Corporate, Employment, Contract, Family, Intellectual Property, and Constitutional Law each follow the same structure, so once you know how to read one section, you know how to read all of them.</p>
+
+      <p>A separate <span class="inline-link" data-nav="orientation">Orientation</span> section covers how the legal system itself actually works: court structure, precedent, the difference between state and federal law, and the path someone takes to become a lawyer in the first place.</p>
+
+      <p>You can find the different practice areas of law in the sidebar to the left. Each one is broken down to build a clearer understanding, so feel free to move through them in whatever order makes the most sense to you.</p>
+
+      <h3>Who this is for</h3>
+      <ul>
+        <li>A student considering law school, who wants context before their first class.</li>
+        <li>Any student simply curious about law, whether or not they plan to study it formally.</li>
+        <li>A new intern trying to keep up with terms nobody stops to explain.</li>
+        <li>Anyone who wants to read a contract, a news story, or a court case and actually understand it.</li>
+      </ul>
+    </div>
+
+    <div class="origin-line">
+      <span class="label">Why this exists</span>
+      <p>This site started as a way to make sense of my own first weeks inside a law firm. I kept a running list of terms I had to look up, concepts I had to have explained twice, and moments where I wished a single page existed that could have caught me up before I walked in the door. This is that page, rebuilt for whoever needs it next.</p>
+      <div class="signed">Gianna Absi</div>
+    </div>
+
+    <div class="site-footer">
+      <div>Law 101, by Gianna Absi</div>
+      <div class="inline-link" data-nav="orientation" style="color:var(--brown-mid);">How Law Actually Works &rarr;</div>
+    </div>
+  `;
+}
+
+function renderComparisonSection(s){
+  const idx = SECTIONS.indexOf(s);
+  const prev = SECTIONS[(idx - 1 + SECTIONS.length) % SECTIONS.length];
+  const next = SECTIONS[(idx + 1) % SECTIONS.length];
+
+  const compareBlocks = s.comparisons.map(c => {
+    const rows = c.rows.map(([label, a, b]) => `
+      <div class="row-label">${label}</div>
+      <div class="cell">${a}</div>
+      <div class="cell">${b}</div>
+    `).join('');
+    return `
+      <div class="compare-block">
+        <div class="compare-title">${c.title}</div>
+        <div class="compare-table">
+          <div class="ch corner"></div>
+          <div class="ch">${c.title.split(' vs. ')[0]}</div>
+          <div class="ch">${c.title.split(' vs. ')[1]}</div>
+          ${rows}
+        </div>
+      </div>
+    `;
+  }).join('<div style="height:34px;"></div>');
+
+  const terms = s.terms.map(([name, def]) => `
+    <div class="term-card">
+      <div class="term-name">${name}</div>
+      <div class="term-def">${def}</div>
+    </div>`).join('');
+
+  return `
+    <div class="back-link" data-nav="home">&larr; Back to home</div>
+    <div class="detail-code mono">${s.code}</div>
+    <div class="detail-title">${s.title}</div>
+    <div class="detail-sub">${s.short}</div>
+
+    <div class="section-block">
+      <div class="block-label">What it covers</div>
+      <p>${s.what}</p>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">Who deals with this</div>
+      <div class="who-line"><p>${s.who}</p></div>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">Why it matters</div>
+      <div class="why-box"><p>${s.why}</p></div>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">Side by side</div>
+      <h2>The comparison worth knowing cold</h2>
+      ${compareBlocks}
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">Key terms</div>
+      <div class="term-grid">${terms}</div>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">In practice</div>
+      <div class="example-box">
+        <div class="example-mark">&ldquo;</div>
+        <p>${s.example}</p>
+      </div>
+    </div>
+
+    <div class="nav-footer">
+      <div data-nav="section-${prev.id}">&larr; ${prev.code}, ${prev.title}</div>
+      <div data-nav="section-${next.id}">${next.code}, ${next.title} &rarr;</div>
+    </div>
+  `;
+}
+
+function renderSection(id){
+  const s = SECTIONS.find(x => x.id === id);
+  if(!s) return renderHome();
+  if(s.isComparison) return renderComparisonSection(s);
+
+  const idx = SECTIONS.indexOf(s);
+  const prev = SECTIONS[(idx - 1 + SECTIONS.length) % SECTIONS.length];
+  const next = SECTIONS[(idx + 1) % SECTIONS.length];
+
+  const terms = s.terms.map(([name, def]) => `
+    <div class="term-card">
+      <div class="term-name">${name}</div>
+      <div class="term-def">${def}</div>
+    </div>`).join('');
+
+  return `
+    <div class="back-link" data-nav="home">&larr; Back to home</div>
+    <div class="detail-code mono">${s.code}</div>
+    <div class="detail-title">${s.title}</div>
+    <div class="detail-sub">${s.short}</div>
+
+    <div class="section-block">
+      <div class="block-label">What it covers</div>
+      <p>${s.what}</p>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">Who deals with this</div>
+      <div class="who-line"><p>${s.who}</p></div>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">Why it matters</div>
+      <div class="why-box"><p>${s.why}</p></div>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">Key terms</div>
+      <h2>${s.title} vocabulary</h2>
+      <div class="term-grid">${terms}</div>
+    </div>
+
+    <div class="section-block">
+      <div class="block-label">In practice</div>
+      <div class="example-box">
+        <div class="example-mark">&ldquo;</div>
+        <p>${s.example}</p>
+      </div>
+    </div>
+
+    <div class="nav-footer">
+      <div data-nav="section-${prev.id}">&larr; ${prev.code}, ${prev.title}</div>
+      <div data-nav="section-${next.id}">${next.code}, ${next.title} &rarr;</div>
+    </div>
+  `;
+}
+
+function renderOrientation(){
+  const topics = ORIENTATION_TOPICS.map(t => `
+    <div class="orient-topic">
+      <h3 class="otitle">${t.title}</h3>
+      <p>${t.text}</p>
+      ${t.flow ? `<div class="flow-row">${t.flow.map((f,i) => `<span class="fstep">${f}</span>${i < t.flow.length-1 ? '<span class="fsep">&rarr;</span>' : ''}`).join('')}</div>` : ''}
+    </div>`).join('');
+
+  return `
+    <div class="back-link" data-nav="home">&larr; Back to home</div>
+    <div class="detail-code mono">ORIENTATION</div>
+    <div class="detail-title">How Law Actually Works</div>
+    <div class="detail-sub">The scaffolding behind every practice area: how it moves, who decides, and where the rules come from.</div>
+    ${topics}
+    <div class="site-footer"><div>Law 101, by Gianna Absi</div></div>
+  `;
+}
+
+/* ================= ROUTING ================= */
+
+function route(){
+  const hash = location.hash.replace('#','') || 'home';
+  const page = document.getElementById('page');
+
+  if(hash === 'home'){
+    page.innerHTML = renderHome();
+  } else if(hash === 'orientation'){
+    page.innerHTML = renderOrientation();
+  } else if(hash.startsWith('section-')){
+    page.innerHTML = renderSection(hash.replace('section-',''));
+  } else {
+    page.innerHTML = renderHome();
+  }
+
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.nav === hash);
+  });
+
+  window.scrollTo(0,0);
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('[data-nav]');
+  if(target){
+    location.hash = target.dataset.nav;
+  }
+});
+
+window.addEventListener('hashchange', route);
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+route();
+</script>
+</body>
+</html>
