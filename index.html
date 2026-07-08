@@ -685,6 +685,45 @@ const SECTIONS = [
     example: "Someone shoplifts from a store and is arrested. The state, not the store, brings the charges against them. If convicted, the penalty is decided by a judge and can range from probation to jail time; the store itself never receives a payment through this process, since that would be a separate civil matter."
   },
   {
+    id: "procedure",
+    code: "PROC 101",
+    title: "Civil & Criminal Procedure",
+    short: "The rulebook behind every case: deadlines, evidence, jurisdiction, and more, compared side by side.",
+    isComparison: true,
+    what: "Beyond the substantive rules that define an area of law, like what counts as a crime or what makes a contract enforceable, every case also has to follow a separate set of procedural rules: the mechanics of how a case actually gets filed, argued, and resolved. Civil procedure and criminal procedure share a lot of the same building blocks, deadlines, jurisdiction, evidence, notice, but the specific rules diverge in important ways depending on what is actually at stake. This page walks through the most common building blocks side by side, so the differences are easy to spot at a glance.",
+    who: "Every attorney works within some version of these rules, whether they are civil litigators tracking discovery deadlines or criminal defense attorneys protecting a client's constitutional rights at trial.",
+    why: "Understanding these procedural building blocks helps explain why civil and criminal cases can feel so different in practice, even when they involve a strikingly similar set of underlying facts.",
+    comparisons: [
+      {
+        title: "Civil Procedure vs. Criminal Procedure",
+        rows: [
+          ["Deadlines", "Set by court rules and statutes of limitations; missing one can mean losing the right to sue entirely.", "Set partly by speedy trial rules and statutes of limitations on charging, protecting a defendant's right to a prompt trial."],
+          ["Witnesses", "Can be compelled by subpoena to testify or hand over documents during discovery and at trial.", "Both sides can call witnesses; a defendant also has a constitutional right to confront the witnesses testifying against them."],
+          ["Challenging court decisions", "Either the plaintiff or the defendant can appeal a decision they disagree with to a higher court.", "Generally only the defendant can appeal a conviction; the government usually cannot appeal an acquittal, due to double jeopardy protections."],
+          ["Notifications", "The defendant must be formally notified of the lawsuit through service of process before the case can move forward.", "The defendant is notified of the charges through arrest, arraignment, or a summons to appear in court."],
+          ["Appointment of an expert", "Either side can hire an expert witness to explain technical issues, like medical or financial details; courts can also appoint a neutral expert.", "Both prosecution and defense can retain experts, and a defendant who cannot afford one may have one appointed at government expense."],
+          ["Jurisdiction", "Determined by where the parties live, where the dispute happened, or where the property involved is located.", "Determined by where the crime was committed, which can get complicated when conduct crosses state or country lines."],
+          ["Cross-border matters", "Enforcing a judgment or serving a defendant abroad depends on treaties and cooperation between courts in different countries.", "Prosecuting conduct across borders often requires extradition treaties and cooperation between countries' law enforcement agencies."],
+          ["Thresholds", "Some courts, like small claims court, only hear disputes below a set dollar amount, sending larger cases elsewhere.", "The line between a misdemeanor and a felony often depends on a specific threshold, like the value stolen or the degree of harm caused."],
+          ["Safeguards", "Rules like discovery and required disclosures protect against surprise evidence and an unfair advantage between the parties.", "A defendant is protected by constitutional safeguards, including the right to counsel, protection against self-incrimination, and the presumption of innocence."],
+          ["Evidence rules", "Evidence must be relevant, but the standard is generally more relaxed, with hearsay exceptions and broad disclosure obligations.", "Evidence rules are stricter, since a conviction can cost someone their liberty, including protections against evidence obtained through unlawful searches."]
+        ]
+      }
+    ],
+    terms: [
+      ["Statute of limitations","The legal deadline for filing a claim or bringing charges, after which the right to do so expires."],
+      ["Service of process","The formal delivery of legal documents notifying someone that they are being sued or charged."],
+      ["Personal jurisdiction","A court's authority over the specific parties in a case, usually based on residence or where an act occurred."],
+      ["Subject matter jurisdiction","A court's authority to hear a particular type of case at all, regardless of who the parties are."],
+      ["Extradition","The formal process of transferring a suspect from one legal jurisdiction to another to face charges."],
+      ["Comity","The informal respect one country's courts extend to another's laws and rulings, without a treaty requiring it."],
+      ["Speedy trial","The constitutional right of a criminal defendant to be tried without unreasonable delay."],
+      ["Small claims threshold","The maximum dollar amount a small claims court is allowed to hear, above which a case must go to a higher court."],
+      ["Due process safeguard","The procedural protections, like proper notice and a fair hearing, that must be in place before the government can take action against someone."]
+    ],
+    example: "Someone is sued in one state for a car accident that happened in another. Before the case can move forward, the court has to confirm it has jurisdiction over the defendant and that they were properly served with notice of the lawsuit. If that same accident also led to criminal charges for reckless driving, that case would move on an entirely separate track, with its own deadlines, evidence rules, and constitutional protections for the accused."
+  },
+  {
     id: "corporate",
     code: "CORP 101",
     title: "Corporate Law",
